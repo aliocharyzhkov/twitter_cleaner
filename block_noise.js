@@ -67,11 +67,18 @@
            */
           const testIdAttr = node.attributes.getNamedItem('data-testId');
           if (testIdAttr && testIdAttr.value === 'cellInnerDiv') {
-            // Hide Promotional tweets.
+            // Hide Promotional tweets (are they deprecated?)
             if (node.innerText && node.innerText.includes('Promoted')) {
               node.style.cssText = 'display: none;';
 
               log(`Promoted tweet has been hidden: ${node.innerText}`);
+            }
+
+            // Hide Ad tweets
+            if (node.querySelector('[data-testId="placementTracking"]')) {
+              node.style.cssText = 'display: none;';
+
+              log(`Ad tweet has been hidden: ${node.innerText}`);
             }
 
             // Hide "Discover more" node.
