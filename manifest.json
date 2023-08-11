@@ -1,20 +1,22 @@
 {
-  "name": "Twitter cleaner",
-  "description": "It hides promoted tweets and other ads to make Twitter less noisy",
-  "version": "1.0",
   "manifest_version": 3,
-  "content_scripts": [
-    {
-      "matches": ["https://twitter.com/*"],
-      "js": ["block_noise.js", "background.js"]
-    }
-  ],
+  "name": "Twitter cleaner",
+  "version": "1.0.1",
+  "description": "It hides promoted tweets and other ads to make Twitter less noisy",
   "icons": {
     "16": "/images/logo16.png",
     "32": "/images/logo32.png",
     "48": "/images/logo48.png",
     "128": "/images/logo128.png"
   },
+  "author": "Alexey Ryzhkov",
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["block_noise.js", "background.js"]
+    }
+  ],
+  "homepage_url": "https://github.com/aliocharyzhkov/twitter_cleaner",
   "options_ui": {
     "page": "options.html",
     "open_in_tab": false
