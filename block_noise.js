@@ -109,6 +109,37 @@ function observeRoot(mutationList, observer) {
           if (discoverMoreNode && discoverMoreNode.isConnected) {
             hideDiscoverMoreTweets();
           }
+
+          // Hide empty nodes
+          if (node.innerText && node.innerText.trim() === '') {
+            node.style.cssText = 'display: none;';
+            log(`An empty block has been hidden: ${node.innerText}`);
+          }
+
+          // Hide "Who to follow" heading node
+          if (node.innerText && node.innerText.includes('Who to follow')) {
+            node.style.cssText = 'display: none;';
+            log(`The "Who to follow" heading has been hidden: ${node.innerText}`);
+          }
+
+          // Hide "Who to follow" tweets
+          if (node.innerText && node.innerText.includes('Follow')) {
+            const hiddenText = node.querySelector('div[style="display: none;"]');
+            if (hiddenText && /click to follow/i.test(hiddenText.innerText)) {
+              node.style.cssText = 'display: none;';
+              log(`The "Who to follow" tweet has been hidden: ${node.innerText}`);
+            }
+          }
+
+          // Hide "See more" link
+          if (
+            node.innerText &&
+            node.innerText.includes('Show more') &&
+            node.querySelector('a[href^="/i/connect_people"]')
+          ) {
+            node.style.cssText = 'display: none;';
+            log(`The "See more" link has been hidden: ${node.innerText}`);
+          }
         }
 
         /**
