@@ -10,7 +10,7 @@ Before                      | After
 ![](/images/before.png)  |  ![](images/after.png)
 
 
-### What it does?
+### What it does
 
 It hides the following items:
 
