@@ -83,8 +83,8 @@ function observeRoot(mutationList, observer) {
           // Hide "Discover more" node.
           if (
             node.innerText &&
-            (node.innerText.includes('Discover more\nSourced from across Twitter') ||
-              node.innerText.includes('More Tweets'))
+            (node.innerText.trim().startsWith('Discover more') ||
+              node.innerText.trim().startsWith('More Tweets'))
           ) {
             node.style.cssText = 'display: none;';
             discoverMoreNode = node;
