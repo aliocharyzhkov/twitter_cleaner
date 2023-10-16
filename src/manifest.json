@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Twitter cleaner",
-  "version": "1.2.0",
-  "description": "It hides promoted tweets and other ads to make Twitter less noisy",
+  "name": "The Ad Blocker for X.com (Twitter)",
+  "version": "1.2.1",
+  "description": "It hides ads and promoted tweets to make X.com (Twitter) less noisy",
   "icons": {
     "16": "/images/logo16.png",
     "32": "/images/logo32.png",
