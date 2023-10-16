@@ -7,7 +7,7 @@ This Chrome extension hides all ads and other needless stuff to make Twitter (X.
 
 Before                      | After
 :-------------------------:|:-------------------------:
-![](/images/before.jpg)  |  ![](images/after.jpg)
+![](/assets/before.jpg)  |  ![](assets/after.jpg)
 
 
 ### What it does

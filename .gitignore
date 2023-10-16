@@ -1,3 +1,4 @@
-images/generate_logos
-images/logo.*
-*.zip
+assets/generate_logos
+assets/logo.*
+dst/*.zip
+*.sh
