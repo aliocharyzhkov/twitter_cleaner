@@ -1,5 +1,7 @@
 let discoverMoreNode;
 
+const extOptions = { loggingEnabled: true, shouldHideTrending: true };
+
 function log(message) {
   if (extOptions.loggingEnabled) {
     console.log('\n\n', message, '\n\n');
@@ -21,8 +23,11 @@ function hideTrendingItems(trendingSectionNode) {
   if (trendingSectionNode && trendingSectionNode.children[0]) {
     const children = trendingSectionNode.children[0].children;
     Array.from(children).forEach((child, index) => {
-      if (index > 0) {
+      if ((extOptions.shouldHideTrending && index > 0) || index > 3) {
         child.style.cssText = 'display: none';
+      }
+      if (extOptions.shouldHideTrending) {
+        log('"Trending" section has been hidden');
       }
     });
   }
@@ -33,7 +38,6 @@ function createObserveSidebarCallback(sidebarNode) {
     for (const mutation of mutationList) {
       if (mutation.type === 'childList') {
         hideTrendingItems(sidebarNode.querySelector('[aria-label="Trending"]'));
-        log('Trending section has been hidden');
       }
     }
   };
@@ -190,12 +194,32 @@ function observeRoot(mutationList, observer) {
   }
 }
 
-const rootNode = document.getElementById('react-root');
+// Asynchronously retrieve data from storage.sync, then cache it.
+chrome.storage.sync.get().then((options) => {
+  Object.assign(extOptions, options);
 
-createObserver(rootNode, observeRoot);
+  const rootNode = document.getElementById('react-root');
+  createObserver(rootNode, observeRoot);
 
-// Prevent the "Trending" section from reappearing on window resize events.
-addEventListener('resize', () => {
-  hideTrendingItems(document.querySelector('[aria-label="Trending"]'));
-  log('Hide "Trending" section on window resize event.');
+  // Prevent the "Trending" section from reappearing on window resize events.
+  addEventListener('resize', () => {
+    hideTrendingItems(document.querySelector('[aria-label="Trending"]'));
+  });
+});
+
+// Watch for changes to the user's options & apply them
+chrome.storage.onChanged.addListener((changes, area) => {
+  console.log('\n\n', 'on change has fired', changes, area, '\n\n');
+
+  if (area === 'sync' && changes.loggingEnabled) {
+    const loggingEnabled = Boolean(changes.loggingEnabled.newValue);
+    console.log(`The logging has been turned ${loggingEnabled ? 'on' : 'off'}`);
+    extOptions.loggingEnabled = loggingEnabled;
+  }
+
+  if (area === 'sync' && changes.shouldHideTrending) {
+    const shouldHideTrending = Boolean(changes.shouldHideTrending.newValue);
+    console.log(`${shouldHideTrending ? 'Hide' : 'show'} "Trending" section.`);
+    extOptions.shouldHideTrending = shouldHideTrending;
+  }
 });

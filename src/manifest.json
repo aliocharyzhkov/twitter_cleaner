@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*"],
-      "js": ["block_noise.js", "background.js"]
+      "js": ["block_noise.js"]
     }
   ],
   "homepage_url": "https://github.com/aliocharyzhkov/twitter_cleaner",
