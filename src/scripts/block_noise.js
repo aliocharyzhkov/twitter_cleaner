@@ -126,13 +126,14 @@ function observeRoot(mutationList, observer) {
             log(`The "Who to follow" heading has been hidden: ${node.innerText}`);
           }
 
-          // Hide "Who to follow" tweets
-          if (node.innerText && node.innerText.includes('Follow')) {
-            const hiddenText = node.querySelector('div[style="display: none;"]');
-            if (hiddenText && /click to follow/i.test(hiddenText.innerText)) {
-              node.style.cssText = 'display: none;';
-              log(`The "Who to follow" tweet has been hidden: ${node.innerText}`);
-            }
+          // Hide "Who to follow" tweet
+          if (
+            node.innerText &&
+            node.innerText.includes('Follow') &&
+            node.querySelector('div[aria-label^="Follow @"]')
+          ) {
+            node.style.cssText = 'display: none;';
+            log(`The "Who to follow" tweet has been hidden: ${node.innerText}`);
           }
 
           // Hide "See more" link
