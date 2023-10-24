@@ -1,4 +1,5 @@
 assets/generate_logos
 assets/logo.*
+assets/*.xcf
 dst/*.zip
 *.sh
