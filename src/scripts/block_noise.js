@@ -128,6 +128,10 @@ function observeRoot(mutationList, observer) {
 
           // Hide "Who to follow" tweet
           if (
+            false ===
+              /\/(verified_followers|followers_you_follow|followers|following)$/.test(
+                window.location.pathname
+              ) &&
             node.innerText &&
             node.innerText.includes('Follow') &&
             node.querySelector('div[aria-label^="Follow @"]')
