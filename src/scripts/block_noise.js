@@ -149,6 +149,18 @@ function observeRoot(mutationList, observer) {
             node.style.cssText = 'display: none;';
             log(`The "See more" link has been hidden: ${node.innerText}`);
           }
+
+          // Hide "Subscribe" CTA
+          if (
+            node.innerText &&
+            ((node.innerText.includes('Subscribe') &&
+              node.querySelector('a[href^="/i/premium_sign_up"]')) ||
+              (node.innerText.includes('X Pro') &&
+                node.querySelector('a[href="https://pro.x.com/"]')))
+          ) {
+            node.style.cssText = 'display: none;';
+            log(`The "Subscribe" CTA has been hidden: ${node.innerText}`);
+          }
         }
 
         /**
