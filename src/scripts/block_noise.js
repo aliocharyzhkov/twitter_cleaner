@@ -220,7 +220,7 @@ chrome.storage.sync.get().then((options) => {
 
   // Prevent the "Trending" section from reappearing on window resize events.
   addEventListener('resize', () => {
-    hideTrendingItems(document.querySelector('[aria-label="Trending"]'));
+    setTimeout(() => hideTrendingItems(document.querySelector('[aria-label="Trending"]')), 0);
   });
 });
 
