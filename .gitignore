@@ -3,3 +3,5 @@ assets/logo.*
 assets/*.xcf
 dst/*.zip
 *.sh
+build/
+node_modules/

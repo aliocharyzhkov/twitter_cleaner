@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "test": "mocha",
+    "build": "npm test && rm -rf ./build && webpack"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^12.0.2",
+    "mocha": "^10.4.0",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "type": "module"
+}

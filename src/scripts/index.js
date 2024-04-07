@@ -1,22 +1,12 @@
-let discoverMoreNode;
+import { createObserver, isPornSpam } from './utils.js';
 
-const extOptions = { loggingEnabled: true, shouldHideTrending: true };
+let discoverMoreNode;
+const extOptions = { loggingEnabled: true, shouldHideTrending: true, shouldHidePorn: false };
 
 function log(message) {
   if (extOptions.loggingEnabled) {
     console.log('\n\n', message, '\n\n');
   }
-}
-
-function createObserver(node, callback) {
-  // Options for the observer (which mutations to observe)
-  const config = { childList: true, subtree: true };
-
-  // Create an observer instance linked to the callback function
-  const observer = new MutationObserver(callback);
-
-  // Start observing the target node for configured mutations
-  observer.observe(node, config);
 }
 
 function hideTrendingItems(trendingSectionNode) {
@@ -140,6 +130,12 @@ function observeRoot(mutationList, observer) {
             log(`The "Who to follow" tweet has been hidden: ${node.innerText}`);
           }
 
+          // Hide porn spam bots
+          if (extOptions.shouldHidePorn && isPornSpam(node.innerText)) {
+            node.style.cssText = 'display: none;';
+            log(`The pron spam bot tweet has been hidden: ${node.innerText}`);
+          }
+
           // Hide "See more" link
           if (
             node.innerText &&
@@ -226,17 +222,23 @@ chrome.storage.sync.get().then((options) => {
 
 // Watch for changes to the user's options & apply them
 chrome.storage.onChanged.addListener((changes, area) => {
-  console.log('\n\n', 'on change has fired', changes, area, '\n\n');
+  // console.log('\n\n', 'on change has fired', changes, area, '\n\n');
 
   if (area === 'sync' && changes.loggingEnabled) {
     const loggingEnabled = Boolean(changes.loggingEnabled.newValue);
-    console.log(`The logging has been turned ${loggingEnabled ? 'on' : 'off'}`);
+    console.log(`'Enable logging' option is ${loggingEnabled ? 'on' : 'off'}`);
     extOptions.loggingEnabled = loggingEnabled;
   }
 
   if (area === 'sync' && changes.shouldHideTrending) {
     const shouldHideTrending = Boolean(changes.shouldHideTrending.newValue);
-    console.log(`${shouldHideTrending ? 'Hide' : 'show'} "Trending" section.`);
+    console.log(`'Hide "Trending" section' option if ${shouldHideTrending ? 'on' : 'off'}.`);
     extOptions.shouldHideTrending = shouldHideTrending;
+  }
+
+  if (area === 'sync' && changes.shouldHidePorn) {
+    const shouldHidePorn = Boolean(changes.shouldHidePorn.newValue);
+    console.log(`'Hide pron spam bots' option is ${shouldHidePorn ? 'on' : 'off'}.`);
+    extOptions.shouldHidePorn = shouldHidePorn;
   }
 });
