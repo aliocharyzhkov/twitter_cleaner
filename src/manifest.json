@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "The Ad Blocker for X.com (Twitter)",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "short_name": "Twitter Ad blocker",
   "description": "Hide ads and promoted tweets to make X.com (Twitter) less noisy",
   "icons": {
@@ -13,7 +13,7 @@
   "author": "Alexey Ryzhkov",
   "content_scripts": [
     {
-      "matches": ["https://twitter.com/*"],
+      "matches": ["https://twitter.com/*", "https://x.com/*"],
       "js": ["scripts/block_noise.js"]
     }
   ],
