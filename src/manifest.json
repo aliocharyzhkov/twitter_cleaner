@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "The Ad Blocker for X.com (Twitter)",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "short_name": "Twitter Ad blocker",
   "description": "Hide ads and promoted tweets to make X.com (Twitter) less noisy",
   "icons": {

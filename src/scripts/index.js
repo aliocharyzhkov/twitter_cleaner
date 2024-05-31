@@ -124,7 +124,7 @@ function observeRoot(mutationList, observer) {
               ) &&
             node.innerText &&
             node.innerText.includes('Follow') &&
-            node.querySelector('div[aria-label^="Follow @"]')
+            node.querySelector('[aria-label^="Follow @"]')
           ) {
             node.style.cssText = 'display: none;';
             log(`The "Who to follow" tweet has been hidden: ${node.innerText}`);
