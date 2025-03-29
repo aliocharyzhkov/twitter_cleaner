@@ -10,17 +10,36 @@ function log(message) {
 }
 
 function hideTrendingItems(trendingSectionNode) {
-  if (trendingSectionNode && trendingSectionNode.children[0]) {
-    const children = trendingSectionNode.children[0].children;
-    Array.from(children).forEach((child, index) => {
-      if ((extOptions.shouldHideTrending && index > 0) || index > 3) {
-        child.style.cssText = 'display: none';
-      }
-      if (extOptions.shouldHideTrending) {
-        log('"Trending" section has been hidden');
-      }
-    });
+  if (!trendingSectionNode) {
+    log('Warning: "Trending" section not detected');
+    return;
   }
+  let curChildren = trendingSectionNode.children;
+  let realChildren = null;
+  while (curChildren && !realChildren) {
+    if (curChildren.length > 2) {
+      realChildren = curChildren;
+    } else {
+      curChildren = curChildren[0].children;
+    }
+  }
+  if (!realChildren) {
+    log('Warning: "Trending" section not detected');
+    return;
+  }
+  log('Making sure "Trending" section is hidden...');
+  Array.from(realChildren).forEach((child, index) => {
+    if ((extOptions.shouldHideTrending && index > 0) || index > 3) {
+      if (child.style.getPropertyValue('display') !== 'none') {
+        child.style.cssText = 'display: none';
+        log(
+          `"Trending" section block No. ${index + 1}` +
+            (child.textContent ? ` containing the following text "${child.textContent}"` : '') +
+            ` has been hidden.`
+        );
+      }
+    }
+  });
 }
 
 function createObserveSidebarCallback(sidebarNode) {
